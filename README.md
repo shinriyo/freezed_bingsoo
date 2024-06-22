@@ -20,3 +20,9 @@
 ```
 build/distributions
 ```
+
+## icon file
+
+```
+./src/main/resources/META-INF
+```
