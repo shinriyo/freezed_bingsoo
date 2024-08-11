@@ -9,13 +9,18 @@
 
 1. Android Studioを止める.
 
-2. このコマンドを実行.
+2. version確認
+
+`build.gradle.kts`
+`src/main/resources/META-INF/plugin.xml`
+
+3. このコマンドを実行.
 
 ```
 ./gradlew buildPlugin
 ```
 
-3. このフォルダを開く
+4. このフォルダを開くとzipファイルがある
 
 ```
 build/distributions
