@@ -1,0 +1,35 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'  // バージョンは適宜調整してください
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.17.2'  // IntelliJ IDEA Plugin開発に必要
+}
+
+repositories {
+    mavenCentral()
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
+    maven { url = uri("https://cache-redirector.jetbrains.com/intellij-dependencies") }
+}
+
+// IntelliJ IDEA Plugin開発の設定
+intellij {
+    version = '2023.3'  // IntelliJ IDEAのバージョン
+    type = 'IC' // Community Edition
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+} 
