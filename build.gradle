@@ -1,0 +1,70 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.17.2'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://www.jetbrains.com/intellij-repository/releases' }
+    maven { url 'https://cache-redirector.jetbrains.com/intellij-dependencies' }
+}
+
+// IntelliJ IDEA Plugin
+intellij {
+    version = '2023.3'  // IntelliJ IDEA
+    type = 'IC' // Community Edition
+    plugins = []
+    runIde {
+        // URL bundle warning suppression
+        systemProperty("ide.mac.url.bundled", "false")
+        // Code With Me related warnings suppression
+        systemProperty("idea.is.internal", "true")
+        // Certificate related warnings suppression
+        systemProperty("ssl.trustmanager.debug", "false")
+        // Look and Feel warnings suppression
+        systemProperty("ide.ui.laf.debug", "false")
+        // Additional warnings suppression
+        systemProperty("idea.diagnostic.disabled.plugins", "com.jetbrains.codeWithMe,com.intellij.stats.completion")
+        // Additional warnings suppression
+        systemProperty("idea.log.debug.categories", "")
+        systemProperty("idea.log.trace.categories", "")
+        systemProperty("idea.log.warning.categories", "")
+        systemProperty("idea.suppress.warnings", "true")
+        systemProperty("idea.headless.enable.statistics", "false")
+        // logging.properties configuration
+        systemProperty("java.util.logging.config.file", 
+                      project.file("config/logging.properties").absolutePath)
+        // Additional warnings suppression
+        systemProperty("idea.platform.prefix", "CommandLine")
+        systemProperty("idea.initially.ask.config", "false")
+        systemProperty("idea.fatal.error.notification", "false")
+        systemProperty("idea.no.launcher", "true")
+        // JVM warnings suppression
+        jvmArgs("-Djdk.module.illegalAccess.silent=true",
+                "-Dide.show.statistics.notification=false",
+                "-Didea.log.warning.categories=",
+                "-Xlog:disable",
+                "-Dapple.awt.UIElement=true",
+                "-Dapple.laf.useScreenMenuBar=false",
+                "-Didea.log.level=ERROR")
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+} 
